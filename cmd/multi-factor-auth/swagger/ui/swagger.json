@@ -1,0 +1,858 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Welcome to the DharitrI Guardians API.\n\nThis documentation describes the endpoints that are available on drt-go-multi-factor-auth-service",
+    "title": "DharitrI Guardians API",
+    "contact": {
+      "name": "Team Dharitri",
+      "email": "contact@dharitri.org"
+    },
+    "version": "0.0.1"
+  },
+  "basePath": "/guardian",
+  "paths": {
+    "/config": {
+      "get": {
+        "description": "This request does not need the Authorization header",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Returns the configuration values for the service instance.",
+        "operationId": "config",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/configResponse"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "A new guardian address will be returned",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "This request is used for both new user registration and old user registration.",
+        "operationId": "registerRequest",
+        "parameters": [
+          {
+            "description": "Registration payload",
+            "name": "Payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RegistrationPayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/registerResponse"
+          }
+        }
+      }
+    },
+    "/registered-users": {
+      "get": {
+        "description": "This request does not need the Authorization header",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Returns the number of users registered.",
+        "operationId": "registeredUsers",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/registeredUsersResponse"
+          }
+        }
+      }
+    },
+    "/set-security-mode": {
+      "post": {
+        "description": "Sets the security mode permanently.\nThis request does not need the Authorization header",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Sets SecurityMode.",
+        "operationId": "securityModeNoExpireRequest",
+        "parameters": [
+          {
+            "description": "SecurityModeNoExpire payload",
+            "name": "Payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SecurityModeNoExpire"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/setSecurityModeNoExpireMessageResponse"
+          }
+        }
+      }
+    },
+    "/sign-message": {
+      "post": {
+        "description": "Signs the provided message with the provided guardian",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Sign message.",
+        "operationId": "signMessageRequest",
+        "parameters": [
+          {
+            "description": "SignMessage payload",
+            "name": "Payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/signMessageResponse"
+          }
+        }
+      }
+    },
+    "/sign-multiple-transactions": {
+      "post": {
+        "description": "Signs the provided transactions with the provided guardian",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Sign multiple transactions.",
+        "operationId": "signMultipleTransactionsRequest",
+        "parameters": [
+          {
+            "description": "Sign multiple transactions payload",
+            "name": "Payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignMultipleTransactions"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/signMultipleTransactionsResponse"
+          }
+        }
+      }
+    },
+    "/sign-transaction": {
+      "post": {
+        "description": "Signs the provided transaction with the provided guardian",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Sign transaction.",
+        "operationId": "signTransactionRequest",
+        "parameters": [
+          {
+            "description": "Sign transaction payload",
+            "name": "Payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignTransaction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/signTransactionResponse"
+          }
+        }
+      }
+    },
+    "/unset-security-mode": {
+      "post": {
+        "description": "Unsets the security mode permanently.\nThis request does not need the Authorization header",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Unset SecurityMode.",
+        "operationId": "unsetSecurityModeNoExpireRequest",
+        "parameters": [
+          {
+            "description": "UnsetSecurityModeNoExpire payload",
+            "name": "Payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SecurityModeNoExpire"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/unsetSecurityModeNoExpireMessageResponse"
+          }
+        }
+      }
+    },
+    "/verify-code": {
+      "post": {
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Verifies the provided code against the user and guardian",
+        "tags": [
+          "Guardian"
+        ],
+        "summary": "Verify code.",
+        "operationId": "verifyCodeRequest",
+        "parameters": [
+          {
+            "description": "Verify code payload",
+            "name": "Payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VerificationPayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/verifyCodeResponse"
+          },
+          "400": {
+            "$ref": "#/responses/verifyCodeResponseBadRequest"
+          },
+          "429": {
+            "$ref": "#/responses/verifyCodeResponseTooManyRequests"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ConfigResponse": {
+      "description": "ConfigResponse is the service response to the tcs config request",
+      "type": "object",
+      "properties": {
+        "backoff-wrong-code": {
+          "description": "the total time a user gets banned for failing too many verify code requests, in seconds",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "BackoffWrongCode"
+        },
+        "registration-delay": {
+          "description": "the minimum delay allowed between registration requests for the same guardian, in seconds",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "RegistrationDelay"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "FrontendTransaction": {
+      "type": "object",
+      "title": "FrontendTransaction represents the DTO used in transaction signing/validation.",
+      "properties": {
+        "chainID": {
+          "type": "string",
+          "x-go-name": "ChainID"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "x-go-name": "Data"
+        },
+        "gasLimit": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "GasLimit"
+        },
+        "gasPrice": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "GasPrice"
+        },
+        "guardian": {
+          "type": "string",
+          "x-go-name": "GuardianAddr"
+        },
+        "guardianSignature": {
+          "type": "string",
+          "x-go-name": "GuardianSignature"
+        },
+        "nonce": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Nonce"
+        },
+        "options": {
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Options"
+        },
+        "receiver": {
+          "type": "string",
+          "x-go-name": "Receiver"
+        },
+        "receiverUsername": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "x-go-name": "ReceiverUsername"
+        },
+        "sender": {
+          "type": "string",
+          "x-go-name": "Sender"
+        },
+        "senderUsername": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "x-go-name": "SenderUsername"
+        },
+        "signature": {
+          "type": "string",
+          "x-go-name": "Signature"
+        },
+        "value": {
+          "type": "string",
+          "x-go-name": "Value"
+        },
+        "version": {
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Version"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-chain-core/data/transaction"
+    },
+    "OTP": {
+      "description": "OTP defines the one time password details",
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string",
+          "x-go-name": "Account"
+        },
+        "algorithm": {
+          "type": "string",
+          "x-go-name": "Algorithm"
+        },
+        "counter": {
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Counter"
+        },
+        "digits": {
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Digits"
+        },
+        "host": {
+          "type": "string",
+          "x-go-name": "Host"
+        },
+        "issuer": {
+          "type": "string",
+          "x-go-name": "Issuer"
+        },
+        "period": {
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Period"
+        },
+        "scheme": {
+          "type": "string",
+          "x-go-name": "Scheme"
+        },
+        "seconds_since_generation": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "TimeSinceGeneration"
+        },
+        "secret": {
+          "type": "string",
+          "x-go-name": "Secret"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "OTPCodeVerifyData": {
+      "description": "OTPCodeVerifyData defines the data provided for otp code info",
+      "type": "object",
+      "properties": {
+        "remaining-trials": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RemainingTrials"
+        },
+        "reset-after": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ResetAfter"
+        },
+        "security-mode-remaining-trials": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "SecurityModeRemainingTrials"
+        },
+        "security-mode-reset-after": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "SecurityModeResetAfter"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "OTPCodeVerifyDataResponse": {
+      "description": "OTPCodeVerifyDataResponse defines the reponse data for otp code verify info",
+      "type": "object",
+      "properties": {
+        "verification-retry-info": {
+          "$ref": "#/definitions/OTPCodeVerifyData"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "RegisterReturnData": {
+      "description": "RegisterReturnData represents the returned data for a registration request",
+      "type": "object",
+      "properties": {
+        "guardian-address": {
+          "type": "string",
+          "x-go-name": "GuardianAddress"
+        },
+        "otp": {
+          "$ref": "#/definitions/OTP"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "RegisteredUsersResponse": {
+      "description": "RegisteredUsersResponse is the service response to the registered users request",
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Count"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "RegistrationPayload": {
+      "description": "RegistrationPayload represents the JSON requests a user uses to require a new provider registration",
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "x-go-name": "Tag"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SecurityModeNoExpire": {
+      "description": "SecurityModeNoExpire is the JSON request the service is receiving\nwhen a user wants to set/unset the security mode",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "second-code": {
+          "type": "string",
+          "x-go-name": "SecondCode"
+        },
+        "user": {
+          "type": "string",
+          "x-go-name": "UserAddr"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SignMessage": {
+      "description": "SignMessage is the JSON request the service is receiving\nwhen a user sends a new message to be signed by the guardian",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "guardian": {
+          "type": "string",
+          "x-go-name": "GuardianAddr"
+        },
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "second-code": {
+          "type": "string",
+          "x-go-name": "SecondCode"
+        },
+        "user": {
+          "type": "string",
+          "x-go-name": "UserAddr"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SignMessageResponse": {
+      "description": "SignMessageResponse is the service response to the sign message request",
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "signature": {
+          "type": "string",
+          "x-go-name": "Signature"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SignMultipleTransactions": {
+      "description": "SignMultipleTransactions is the JSON request the service is receiving\nwhen a user sends multiple transactions to be signed by the guardian",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "second-code": {
+          "type": "string",
+          "x-go-name": "SecondCode"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FrontendTransaction"
+          },
+          "x-go-name": "Txs"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SignMultipleTransactionsResponse": {
+      "description": "SignMultipleTransactionsResponse is the service response to the sign multiple transactions request",
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FrontendTransaction"
+          },
+          "x-go-name": "Txs"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SignTransaction": {
+      "description": "SignTransaction is the JSON request the service is receiving\nwhen a user sends a new transaction to be signed by the guardian",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "second-code": {
+          "type": "string",
+          "x-go-name": "SecondCode"
+        },
+        "transaction": {
+          "$ref": "#/definitions/FrontendTransaction"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "SignTransactionResponse": {
+      "description": "SignTransactionResponse is the service response to the sign transaction request",
+      "type": "object",
+      "properties": {
+        "transaction": {
+          "$ref": "#/definitions/FrontendTransaction"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    },
+    "VerificationPayload": {
+      "description": "VerificationPayload represents the JSON requests a user uses to validate the authentication code",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "guardian": {
+          "type": "string",
+          "x-go-name": "Guardian"
+        },
+        "second-code": {
+          "type": "string",
+          "x-go-name": "SecondCode"
+        }
+      },
+      "x-go-package": "github.com/TerraDharitri/drt-go-multi-factor-auth-service/core/requests"
+    }
+  },
+  "responses": {
+    "configResponse": {
+      "description": "The configuration values",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/ConfigResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "registerResponse": {
+      "description": "Guardian address and qr code",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/RegisterReturnData"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "registeredUsersResponse": {
+      "description": "The number of users registered",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/RegisteredUsersResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "setSecurityModeNoExpireMessageResponse": {
+      "description": "The status of the operation",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "SetSecurityModeNoExpireMessageResponse\nHTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "signMessageResponse": {
+      "description": "The message with the signature for it",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/SignMessageResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "signMultipleTransactionsResponse": {
+      "description": "The transactions array with their guardian's signature on them",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/SignMultipleTransactionsResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "signTransactionResponse": {
+      "description": "The full transaction with its guardian signature on it",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/SignTransactionResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "unsetSecurityModeNoExpireMessageResponse": {
+      "description": "The status of the operation",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "UnsetSecurityModeNoExpireMessageResponse\nHTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "verifyCodeResponse": {
+      "description": "Verification result",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "description": "Empty data field\nx-nullable:true",
+            "type": "string",
+            "x-go-name": "Data"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "verifyCodeResponseBadRequest": {
+      "description": "Verification result failure, bad request",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/OTPCodeVerifyDataResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    },
+    "verifyCodeResponseTooManyRequests": {
+      "description": "Verification result failure, too many requests",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code",
+            "type": "string",
+            "x-go-name": "Code"
+          },
+          "data": {
+            "$ref": "#/definitions/OTPCodeVerifyDataResponse"
+          },
+          "error": {
+            "description": "Internal error",
+            "type": "string",
+            "x-go-name": "Error"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
